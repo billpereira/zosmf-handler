@@ -1,0 +1,14 @@
+{
+  "name": "zosmf-handler",
+  "version": "1.0.0",
+  "description": "work with zosmf apis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "William Pereira <william.pereira@me.com>",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "repository": "https://github.com/billpereira/node-zosmf.git"
+}
