@@ -24,13 +24,11 @@ const makeRequest = options =>
                 body += data;
             });
             res.on('end', () => {
-              // // console.log('body', body)
                 body = JSON.parse(body);
                 resolve(body);
             });
         });
         if (options.body) {
-            console.log('options.body', JSON.stringify(options.body));
             results.write(JSON.stringify(options.body));
         }
         results.on('error', e => {

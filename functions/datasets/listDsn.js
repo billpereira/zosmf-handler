@@ -1,3 +1,16 @@
+// ------------------------------------------------------------
+//
+//  Author:   William Pereira
+//  Date:     02/12/2019
+//  Function: List DSNs based on hlq provided and volser if available
+//
+// ------------------------------------------------------------
+// How to use:
+// listDsn(options)
+//     .then(results => console.log('results :', results))
+//     .catch(e => console.log('e :', e));
+// ------------------------------------------------------------
+
 const makeRequest = require('../../services/https-request');
 var options = require('../../config/options');
 
@@ -21,29 +34,6 @@ const handleOptions = options => {
 const listDsn = async options => {
 	options = await handleOptions(options).catch(e => e);
 	return await makeRequest(options).catch(e => e);
-	// console.log('results :', results);
-	// return results;
 };
 
-listDsn(options)
-	.then(res => {
-		console.log('res :', res);
-		// return Promise.resolve(res)
-	})
-	.catch((e) => {
-		console.log('e :', e);
-	});
-
-// console.log('abc :', listDsn(options));
-
-// const teste = await handleOptions(options).catch(error => error)
-// console.log('teste :', teste);
-
-// main()
-// var listDsn = options => {
-//     makeRequest(options)
-//         .then(res => console.log('res :', res))
-//         .catch(e => console.log('e :', e));
-// };
-
-// listDsn(options);
+module.exports = listDsn
