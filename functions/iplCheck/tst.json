@@ -1,0 +1,6 @@
+{
+	"cmd-response-key": "C3977966",
+	"cmd-response-url": "https://200.142.195.216:443/zosmf/restconsoles/consoles/ibmusecn/solmsgs/C3977966",
+	"cmd-response-uri": "/zosmf/restconsoles/consoles/ibmusecn/solmsgs/C3977966",
+	"cmd-response": " IEE457I 15.20.10 UNIT STATUS 289\r UNIT TYPE STATUS        VOLSER     VOLSTATE      SS\r 4502 3390 S             MI9SY1     PRIV/RSDNT     0"
+}

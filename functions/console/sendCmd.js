@@ -27,7 +27,7 @@ const handleOptions = options => {
 		if (!options.headers)
 			options.headers = {
 				'X-CSRF-ZOSMF-HEADER': 'ZOSMF',
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json;charset=ISO-8859-1',
 			};
 		resolve(options);
 	});

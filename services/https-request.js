@@ -25,11 +25,13 @@ const makeRequest = options =>
             });
             res.on('end', () => {
                 body = JSON.parse(body);
+                console.log('body :', body);
                 resolve(body);
             });
         });
         if (options.body) {
-            results.write(JSON.stringify(options.body));
+            // results.write(options.body);
+            results.write(JSON.stringify(options.body),['Transfer-Encoding', 'chunked']);
         }
         results.on('error', e => {
             reject(e);

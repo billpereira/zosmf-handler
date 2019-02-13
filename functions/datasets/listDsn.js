@@ -36,4 +36,6 @@ const listDsn = async options => {
 	return await makeRequest(options).catch(e => e);
 };
 
+listDsn(options).then(res=>console.log(res.items[2].dsname))
+
 module.exports = listDsn
