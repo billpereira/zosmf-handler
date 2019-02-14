@@ -12,7 +12,6 @@
 // ------------------------------------------------------------
 
 const makeRequest = require('../../services/https-request');
-var options = require('../../config/options');
 
 const handleOptions = options => {
 	return new Promise(function(resolve, reject) {
@@ -36,6 +35,4 @@ const listDsn = async options => {
 	return await makeRequest(options).catch(e => e);
 };
 
-listDsn(options).then(res=>console.log(res.items[2].dsname))
-
-module.exports = listDsn
+module.exports = listDsn;

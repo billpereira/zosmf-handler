@@ -19,20 +19,20 @@ const makeRequest = options =>
         let results = https.request(options, res => {
             res.setEncoding('utf8');
             let body = '';
-
             res.on('data', data => {
                 body += data;
             });
             res.on('end', () => {
                 body = JSON.parse(body);
-                console.log('body :', body);
                 resolve(body);
             });
         });
-        if (options.body) {
-            // results.write(options.body);
-            results.write(JSON.stringify(options.body),['Transfer-Encoding', 'chunked']);
-        }
+        if (options.body)
+            results.write(JSON.stringify(options.body), [
+                'Transfer-Encoding',
+                'chunked'
+            ]);
+
         results.on('error', e => {
             reject(e);
         });

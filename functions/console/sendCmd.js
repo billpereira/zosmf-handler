@@ -27,7 +27,7 @@ const handleOptions = options => {
 		if (!options.headers)
 			options.headers = {
 				'X-CSRF-ZOSMF-HEADER': 'ZOSMF',
-				'Content-Type': 'application/json;charset=ISO-8859-1',
+				'Content-Type': 'application/json;charset=ISO-8859-1'
 			};
 		resolve(options);
 	});
@@ -36,8 +36,6 @@ const handleOptions = options => {
 const sendCmd = async options => {
 	options = await handleOptions(options).catch(e => e);
 	return await makeRequest(options).catch(e => e);
-	// console.log('results :', results);
-	// return results;
 };
 
-module.exports = sendCmd
+module.exports = sendCmd;
