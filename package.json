@@ -8,7 +8,15 @@
   },
   "author": "William Pereira <william.pereira@me.com>",
   "license": "ISC",
-  "dependencies": {
-  },
-  "repository": "https://github.com/billpereira/node-zosmf.git"
+  "dependencies": {},
+  "repository": "https://github.com/billpereira/node-zosmf.git",
+  "devDependencies": {
+    "eslint": "^5.14.0",
+    "eslint-config-google": "^0.12.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0"
+  }
 }
