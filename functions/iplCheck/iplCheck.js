@@ -108,6 +108,8 @@ const getLoad = async (loadInfo, optionsVolume) => {
 
 // options should have hostname, username, password, l1, l2
 const iplCheck = async (options) => {
+  console.log('1');
+
   const optionsVolume = options;
   const {l1} = optionsVolume;
   const {l2} = optionsVolume;
@@ -116,19 +118,23 @@ const iplCheck = async (options) => {
     cmd: `d u,,,${l1.unit},1`,
   };
 
+  console.log('optionsVolume :', optionsVolume);
   const volDisplay = await sendCmd(optionsVolume).catch((e) => console.log(e));
   if (volDisplay.error) throw volDisplay;
+  console.log('2');
 
+  console.log('\n\nl2 :\n', l2);
   l1.volser = extractVolser(volDisplay);
   l1.isNucleusPresent = await checkNucleus(l1.volser, optionsVolume).catch(
       (e) => console.log('e :', e)
   );
 
   console.log('\n\nl1 :\n', l1);
+
   l2.loadInfo = await checkLoadParm(l1, l2.parm, optionsVolume).catch((e) =>
     console.log(e)
   );
-
+  console.log('3');
   l2.content = await getLoad(l2.loadInfo, optionsVolume).catch((e) =>
     console.log(e)
   );

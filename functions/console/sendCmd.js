@@ -22,6 +22,9 @@ const handleOptions = (options) => {
     // {"cms":"d a,l"}
     options.path = `/zosmf/restconsoles/consoles/ibmusecn`;
     options.method = 'PUT';
+    console.log('options.hostname :', options.hostname);
+    console.log('options.auth :', options.auth);
+    console.log('options.hostname :', options.hostname);
     if (!options.hostname || !options.auth || !options.body) {
       const error = {error: 'parms missing'};
       reject(error);
