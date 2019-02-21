@@ -13,26 +13,29 @@
 
 const makeRequest = require('../../services/https-request');
 
-const handleOptions = options => {
-	return new Promise(function(resolve, reject) {
-		// GET /zosmf/restfiles/ds?dslevel=<dataset_name_pattern>[&volser=<volser>&start=<dsname>]
-		options.path = `/zosmf/restfiles/ds?dslevel=${options.hlq}&volser=${
-			options.volser
-		}`;
-		options.method = 'GET';
-		if (!options.hostname || !options.auth || !options.hlq)
-			reject({ error: 'parms missing' });
-		if (!options.headers)
-			options.headers = { 'X-CSRF-ZOSMF-HEADER': 'ZOSMF' };
-		if (!options.volser)
-			options.path = `/zosmf/restfiles/ds?dslevel=${options.hlq}`;
-		resolve(options);
-	});
-};
-
-const listDsn = async options => {
-	options = await handleOptions(options).catch(e => e);
-	return await makeRequest(options).catch(e => e);
+// GET /zosmf/restfiles/ds?dslevel=<dataset_name_pattern>
+//     [&volser=<volser>&start=<dsname>]
+const handleOptions = options => new Promise((resolve, reject) => {
+  options.path = `/zosmf/restfiles/ds?dslevel=${options.hlq}&volser=${options.volser}`;
+  options.method = 'GET';
+  if (!options.hostname || !options.auth || !options.hlq) {
+    const error = { error: 'parms missing' };
+    reject(error);
+  }
+  if (!options.headers) options.headers = { 'X-CSRF-ZOSMF-HEADER': 'ZOSMF' };
+  if (!options.volser) {
+    options.path = `/zosmf/restfiles/ds?dslevel=${options.hlq}`;
+  }
+  resolve(options);
+});
+const listDsn = async (options) => {
+  const optionsLD = await handleOptions(options).catch(e => e);
+  try {
+    return await makeRequest(optionsLD).catch(e => e);
+  }
+  catch (error) {
+    return error;
+  }
 };
 
 module.exports = listDsn;

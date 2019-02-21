@@ -1,10 +1,89 @@
 {
-    "extends": "google",
-    "parserOptions": {
-        "ecmaVersion": 2017
-    },
-
-    "env": {
-        "es6": true
-    }
+	"env": {
+		"es6": true,
+		"jest": true,
+		"mocha": true,
+		"node": true
+	},
+	"extends": ["airbnb-base"],
+	"parserOptions": {
+		"ecmaVersion": 2018,
+		"sourceType": "module"
+	},
+	"rules": {
+		"no-console": "off",
+		"brace-style": [
+			"error",
+			"stroustrup",
+			{
+				"allowSingleLine": true
+			}
+		],
+		"comma-dangle": [
+			"error",
+			{
+				"arrays": "only-multiline",
+				"functions": "never",
+				"objects": "only-multiline"
+			}
+		],
+		"max-len": [
+			"error",
+			160,
+			{
+				"ignoreStrings": true,
+				"ignoreTemplateLiterals": true,
+				"ignoreTrailingComments": true
+			}
+		],
+		"no-param-reassign": [
+			"error",
+			{
+				"props": false
+			}
+		],
+		"no-plusplus": [
+			"error",
+			{
+				"allowForLoopAfterthoughts": true
+			}
+		],
+		"no-restricted-syntax": ["off", "ForInStatement"],
+		"no-underscore-dangle": [
+			"error",
+			{
+				"allow": ["_id", "_rev"]
+			}
+		],
+		"no-unused-expressions": [
+			"error",
+			{
+				"allowTernary": true
+			}
+		],
+		"no-unused-vars": [
+			"error",
+			{
+				"argsIgnorePattern": "^_"
+			}
+		],
+		"object-curly-newline": [
+			"error",
+			{
+				"ObjectExpression": {
+					"multiline": true
+				},
+				"ObjectPattern": {
+					"multiline": true
+				}
+			}
+		],
+		"prefer-destructuring": [
+			"error",
+			{
+				"array": false
+			}
+		],
+		"strict": "off"
+	}
 }

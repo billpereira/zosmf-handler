@@ -16,33 +16,33 @@
 const makeRequest = require('../../services/https-request');
 // var options = require('../../config/options');
 
-const handleOptions = (options) => {
-  return new Promise(function(resolve, reject) {
-    // PUT /zosmf/restconsoles/consoles/ibmusecn
-    // {"cms":"d a,l"}
-    options.path = `/zosmf/restconsoles/consoles/ibmusecn`;
-    options.method = 'PUT';
-    console.log('options.hostname :', options.hostname);
-    console.log('options.auth :', options.auth);
-    console.log('options.hostname :', options.hostname);
-    if (!options.hostname || !options.auth || !options.body) {
-      const error = {error: 'parms missing'};
-      reject(error);
-    }
-    if (!options.headers) {
-      options.headers = {
-        'X-CSRF-ZOSMF-HEADER': 'ZOSMF',
-        'Content-Type': 'application/json;charset=ISO-8859-1',
-      };
-    }
-    resolve(options);
-  });
-};
+const handleOptions = options => new Promise((resolve, reject) => {
+  // PUT /zosmf/restconsoles/consoles/ibmusecn
+  // {"cms":"d a,l"}
+  options.path = '/zosmf/restconsoles/consoles/ibmusecn';
+  options.method = 'PUT';
+  if (!options.hostname || !options.auth || !options.body) {
+    const error = { error: 'parms missing' };
+    reject(error);
+  }
+  if (!options.headers) {
+    options.headers = {
+      'X-CSRF-ZOSMF-HEADER': 'ZOSMF',
+      'Content-Type': 'application/json;charset=ISO-8859-1'
+    };
+  }
+  resolve(options);
+});
 
 const sendCmd = async (options) => {
-  options = await handleOptions(options).catch((e) => e);
-  if (options.error) return options;
-  return await makeRequest(options).catch((e) => e);
+  const optionsSC = await handleOptions(options).catch(e => e);
+  if (optionsSC.error) return options;
+  try {
+    return await makeRequest(options).catch(e => e);
+  }
+  catch (error) {
+    return error;
+  }
 };
 
 module.exports = sendCmd;

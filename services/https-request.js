@@ -10,38 +10,34 @@
 //     .then(results => console.log('results :', results))
 //     .catch(e => console.log('e :', e));
 // ------------------------------------------------------------
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 
 const https = require('https');
 
-const makeRequest = (options) =>
-  new Promise(function(resolve, reject) {
-    const results = https.request(options, (res) => {
-      res.setEncoding('utf8');
-      let body = '';
-      res.on('data', (data) => {
-        body += data;
-      });
-      res.on('end', () => {
-        if (!options.content) {
+const makeRequest = options => new Promise(((resolve, reject) => {
+  const results = https.request(options, (res) => {
+    res.setEncoding('utf8');
+    let body = '';
+    res.on('data', (data) => {
+      body += data;
+    });
+    res.on('end', () => {
+      if (!options.content) {
         //   console.log('teste!!!!!!!!!!!!');
-          body = JSON.parse(body);
-        }
-        // console.log('body :', body);
-        resolve(body);
-      });
+        body = JSON.parse(body);
+      }
+      // console.log('body :', body);
+      resolve(body);
     });
-    if (options.body) {
-      results.write(JSON.stringify(options.body), [
-        'Transfer-Encoding',
-        'chunked',
-      ]);
-    }
-
-    results.on('error', (e) => {
-      reject(e);
-    });
-    results.end();
   });
+  if (options.body) {
+    results.write(JSON.stringify(options.body), ['Transfer-Encoding', 'chunked']);
+  }
+
+  results.on('error', (e) => {
+    reject(e);
+  });
+  results.end();
+}));
 
 module.exports = makeRequest;
