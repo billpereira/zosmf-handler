@@ -1,2 +1,12 @@
 node_modules
 package-lock.json
+
+
+package-lock.json
+.gitignore_old
+zosmf
+config/options.js
+config/tstIEASYS.js
+config/tstServer.js
+
+server
