@@ -30,23 +30,23 @@
 //          n-SYS1.IPLPARM
 
 // * Import of needed modules
-const sendCmd = require('../console/sendCmd');
-const listDsn = require('../datasets/listDsn');
-const listMembers = require('../datasets/listMembers');
-const listDsnContent = require('../datasets/listDsnContent');
-const extractLoadInfo = require('./extractLoadInfo');
+const sendCmd = require("../console/sendCmd");
+const listDsn = require("../datasets/listDsn");
+const listMembers = require("../datasets/listMembers");
+const listDsnContent = require("../datasets/listDsnContent");
+const extractLoadInfo = require("./extractLoadInfo");
 
 // * Test options
-const optionsTst = require('../../config/tstServer');
+const optionsTst = require("../../config/tstServer");
 
 // * Taking the answer and extracting only the volser
-const extractVolser = (volDisplay) => {
+const extractVolser = volDisplay => {
   const rawAnswer = JSON.stringify(volDisplay);
   const reg = /3390[\w\s]+PRIV/g;
   let volserArray = reg.exec(rawAnswer);
   let volserString = volserArray[0];
-  volserString = volserString.replace(/\s\s+/g, ' ');
-  volserArray = volserString.split(' ');
+  volserString = volserString.replace(/\s\s+/g, " ");
+  volserArray = volserString.split(" ");
   volserString = volserArray[2];
 
   return volserString;
@@ -54,7 +54,7 @@ const extractVolser = (volDisplay) => {
 
 //* Return true if SYS1.NUCLEUS are on volser and false if not
 const checkNucleus = async (volser, optionsVolume) => {
-  optionsVolume.hlq = 'SYS1.NUCLEUS';
+  optionsVolume.hlq = "SYS1.NUCLEUS";
   optionsVolume.volume = volser;
   const request = await listDsn(optionsVolume);
   if (request.returnedRows > 0) return true;
@@ -63,8 +63,8 @@ const checkNucleus = async (volser, optionsVolume) => {
 
 // * Load info from LOADnn
 const checkIPLParm = async (loadInfo, optionsVolume) => {
-  let results = '';
-  let iplParm = '';
+  let results = "";
+  let iplParm = "";
   for (let i = 0; i <= 9; i++) {
     iplParm = `SYS${i}.IPLPARM`;
     optionsVolume.pds = iplParm;
@@ -84,13 +84,14 @@ const checkLoadParm = async (l1, l2, optionsVolume) => {
   };
 
   if (l1 === loadInfo.unit) {
-    loadInfo.loadLocation = 'sys1.parmlib';
-    loadInfo.volser = 'l1.volser';
-  }
-  else {
+    loadInfo.loadLocation = "sys1.parmlib";
+    loadInfo.volser = "l1.volser";
+  } else {
     optionsVolume.body = { cmd: `d u,,,${loadInfo.unit},1` };
     const volDisplay = await sendCmd(optionsVolume).catch(e => console.log(e));
-    loadInfo.loadLocation = await checkIPLParm(loadInfo, optionsVolume).catch(e => console.log(e));
+    loadInfo.loadLocation = await checkIPLParm(loadInfo, optionsVolume).catch(
+      e => console.log(e)
+    );
     loadInfo.volser = extractVolser(volDisplay);
   }
   return loadInfo;
@@ -98,13 +99,13 @@ const checkLoadParm = async (l1, l2, optionsVolume) => {
 
 const getLoad = async (loadInfo, optionsVolume) => {
   optionsVolume.pds = `${loadInfo.loadLocation}(LOAD${loadInfo.load})`;
-  console.log('optionsVolume :', optionsVolume);
+  console.log("optionsVolume :", optionsVolume);
   const load = await listDsnContent(optionsVolume);
   return load;
 };
 
 // options should have hostname, username, password, l1, l2
-const iplCheck = async (options) => {
+const iplCheck = async options => {
   const optionsVolume = options;
   const { l1 } = optionsVolume;
   const { l2 } = optionsVolume;
@@ -114,21 +115,27 @@ const iplCheck = async (options) => {
   const volDisplay = await sendCmd(optionsVolume).catch(e => console.error(e));
   if (volDisplay.error) throw volDisplay;
   l1.volser = extractVolser(volDisplay);
-  l1.isNucleusPresent = await checkNucleus(l1.volser, optionsVolume).catch(e => console.log('e :', e));
+  l1.isNucleusPresent = await checkNucleus(l1.volser, optionsVolume).catch(e =>
+    console.log("e :", e)
+  );
 
-  console.log('\n\nl1 :\n', l1);
+  console.log("\n\nl1 :\n", l1);
 
-  l2.loadInfo = await checkLoadParm(l1, l2.parm, optionsVolume).catch(e => console.error(e));
-  const content = await getLoad(l2.loadInfo, optionsVolume).catch(e => console.error(e));
+  l2.loadInfo = await checkLoadParm(l1, l2.parm, optionsVolume).catch(e =>
+    console.error(e)
+  );
+  const content = await getLoad(l2.loadInfo, optionsVolume).catch(e =>
+    console.error(e)
+  );
 
   l2.content = extractLoadInfo(content);
 
-  console.log('\n\nl2 :\n', l2);
+  console.log("\n\nl2 :\n", l2);
 
   return { l1, l2 };
 };
 
-iplCheck(optionsTst).catch((e) => {
+iplCheck(optionsTst).catch(e => {
   console.error(e);
 });
 

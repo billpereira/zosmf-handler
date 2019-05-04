@@ -18,18 +18,15 @@
 // lines can also be used in comments, after the last statement in the record. Otherwise, do not use
 // blank lines within record specifications.
 
-const listDsnContent = require('../datasets/listDsnContent');
-const tstIeasys = require('../../config/tstIEASYS');
+const listDsnContent = require("../datasets/listDsnContent");
+const tstIeasys = require("../../config/tstIEASYS");
 
 const tstAnswer = {};
 
-const testLength = (item) => {
-  if (item.length < 72) return true;
-  return false;
-};
+const testLength = item => (item.length < 72 ? true : false);
 
-const validate = (content) => {
-  const arrIeasys = content.split('\n');
+const validate = content => {
+  const arrIeasys = content.split("\n");
 
   for (let i = 0; i < arrIeasys.length; i++) {
     const lengthLine = testLength(arrIeasys[i]);
@@ -38,11 +35,11 @@ const validate = (content) => {
   }
 };
 
-const getIEASYS = async (options) => {
+const getIEASYS = async options => {
   tstAnswer.ieasysContent = await listDsnContent(options);
 
   validate(tstAnswer.ieasysContent);
-  console.log('IEASYS', tstAnswer);
+  console.log("IEASYS", tstAnswer);
 };
 
 getIEASYS(tstIeasys);
