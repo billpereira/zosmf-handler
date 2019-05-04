@@ -1,4 +1,4 @@
-// const content = require('../../config/loadExample');
+const content = require('../../config/loadExample');
 
 const extractLoadInfo = (cont) => {
   const arrCont = cont.split('\n');
@@ -45,6 +45,6 @@ const extractLoadInfo = (cont) => {
   return { IODF, NUCLEUS, NUCLST, SYSCAT, SYSPARM, IEASYM, PARMLIB };
 };
 
-// console.log('content :', extractLoadInfo(content.content));
+console.log('content :', extractLoadInfo(content.content));
 
-module.exports = extractLoadInfo;
+// module.exports = extractLoadInfo;
