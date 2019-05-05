@@ -18,28 +18,35 @@
 // lines can also be used in comments, after the last statement in the record. Otherwise, do not use
 // blank lines within record specifications.
 
-const listDsnContent = require("../datasets/listDsnContent");
-const tstIeasys = require("../../config/tstIEASYS");
+// const listDsnContent = require('../datasets/listDsnContent');
+const ieasys = require('../../config/ieasysExample');
+const tstIeasys = require('../../config/tstIEASYS');
+const checkLength = require('../syntax/checkLength');
+const checkBlankLine = require('../syntax/blankLine');
+const checkUpperCase = require('../syntax/checkUpperCase');
 
-const tstAnswer = {};
+// const tstAnswer = {};
 
-const testLength = item => (item.length < 72 ? true : false);
-
-const validate = content => {
-  const arrIeasys = content.split("\n");
+const validate = (content) => {
+  const arrIeasys = content.split('\n');
 
   for (let i = 0; i < arrIeasys.length; i++) {
-    const lengthLine = testLength(arrIeasys[i]);
+    if (!(checkLength(arrIeasys[i]) && checkBlankLine(arrIeasys[i]) && checkUpperCase(arrIeasys[i]))) {
+      console.log(`line ${i} with syntax error`);
+    }
 
-    console.log(lengthLine);
+    // console.log(lengthLine);
   }
 };
 
-const getIEASYS = async options => {
-  tstAnswer.ieasysContent = await listDsnContent(options);
+const getIEASYS = async () => {
+  // const getIEASYS = async (options) => {
+  // tstAnswer.ieasysContent = await listDsnContent(options);
+  // validate(tstAnswer.ieasysContent);
 
-  validate(tstAnswer.ieasysContent);
-  console.log("IEASYS", tstAnswer);
+  validate(ieasys.content);
+
+  // console.log('IEASYS', ieasys.content);
 };
 
 getIEASYS(tstIeasys);

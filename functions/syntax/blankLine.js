@@ -1,3 +1,3 @@
-const testBlank = line => (line.trim() === "\n" ? true : false);
+const testBlank = line => (line.trim() !== '');
 
 module.exports = testBlank;
